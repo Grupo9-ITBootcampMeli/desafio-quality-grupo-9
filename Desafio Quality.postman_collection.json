@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "22ea385d-0eb1-4ffa-afb4-1a716a767b72",
+		"name": "Desafio Quality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create New Property Example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propName\": \"\",\n    \"district\": {\n        \"propDistrict\": \"\",\n        \"valueDistrictM2\": 0.0\n    },\n    \"rooms\": [\n        {\n            \"roomName\": \"\",\n            \"roomWidth\": 0.0,\n            \"roomLength\": 0.0\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
