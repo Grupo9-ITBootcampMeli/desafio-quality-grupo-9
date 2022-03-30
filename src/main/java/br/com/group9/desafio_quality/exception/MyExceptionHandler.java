@@ -30,4 +30,16 @@ public class MyExceptionHandler {
         String bodyOfResponse = e.getMessage();
         return ResponseEntity.badRequest().body(bodyOfResponse);
     }
+
+    @ExceptionHandler(DistrictNotFoundException.class)
+    protected ResponseEntity<Object> handleDistrictNotFoundException(DistrictNotFoundException e) {
+        String bodyOfResponse = e.getMessage();
+        return ResponseEntity.badRequest().body(bodyOfResponse);
+    }
+
+    @ExceptionHandler(PropertyNotFoundException.class)
+    protected ResponseEntity<Object> handlePropertyNotFoundException(PropertyNotFoundException e) {
+        String bodyOfResponse = e.getMessage();
+        return ResponseEntity.badRequest().body(bodyOfResponse);
+    }
 }

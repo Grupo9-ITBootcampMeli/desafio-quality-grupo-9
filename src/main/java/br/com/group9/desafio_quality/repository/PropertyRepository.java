@@ -1,6 +1,7 @@
 package br.com.group9.desafio_quality.repository;
 
 import br.com.group9.desafio_quality.dto.PropertyDTO;
+import br.com.group9.desafio_quality.exception.PropertyNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -22,8 +23,7 @@ public class PropertyRepository {
 
     public PropertyDTO get(Long id) {
         PropertyDTO foundProperty =  properties.get(id);
-        // TODO: 30/03/22 Create custom exception for not founding property by ID.
-        if(foundProperty == null) throw new RuntimeException();
+        if(foundProperty == null) throw new PropertyNotFoundException("Não há nenhuma propriedade com o ID ".concat(id.toString()).concat("."));
         return foundProperty;
     }
 }

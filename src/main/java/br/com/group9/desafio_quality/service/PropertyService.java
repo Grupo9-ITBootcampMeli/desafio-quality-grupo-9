@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,11 +76,10 @@ public class PropertyService {
         return getBiggestRoom(foundProperty);
     }
 
-    public Double getTotalValueByPropertyId(Long id) {
+    public BigDecimal getTotalValueByPropertyId(Long id) {
         PropertyDTO foundProperty = propertyRepository.get(id);
         Double totalM2 = calculateTotalM2(foundProperty);
-        Double M2Value = 10.0; // foundProperty.getDistrict().getValueDistrictM2();
-        // TODO: 30/03/22 Implementar com o valor real do DistrictDTO
-        return totalM2 * M2Value;
+        BigDecimal M2Value = foundProperty.getDistrict().getValueDistrictM2();
+        return M2Value.multiply(BigDecimal.valueOf(totalM2));
     }
 }
