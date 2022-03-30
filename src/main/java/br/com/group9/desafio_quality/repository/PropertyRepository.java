@@ -17,7 +17,7 @@ public class PropertyRepository {
     public PropertyDTO add(PropertyDTO property) {
         property.setId(PropertyDTO.generateId());
         properties.put(property.getId(), property);
-        return null;
+        return property;
     }
 
     public PropertyDTO get(Long id) {

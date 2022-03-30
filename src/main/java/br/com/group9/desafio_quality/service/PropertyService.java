@@ -1,5 +1,6 @@
 package br.com.group9.desafio_quality.service;
 
+import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.dto.PropertyDTO;
 import br.com.group9.desafio_quality.dto.RoomDTO;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
@@ -7,6 +8,7 @@ import br.com.group9.desafio_quality.repository.PropertyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PropertyService {
@@ -18,20 +20,25 @@ public class PropertyService {
         this.districtRepository = districtRepository;
     }
 
-    private boolean validateDistrict(Long districtId) {
-        throw new UnsupportedOperationException("Falta implementar.");
+    private DistrictDTO findDistrict(Long districtId) {
+        return null;
+        // TODO: 30/03/22 Implementar lógica com DistrictRepository e exceptionHandler
     }
 
-    public Double calculateTotalM2(PropertyDTO propertyDTO) {
-        throw new UnsupportedOperationException("Falta implementar.");
+    private List<RoomDTO> calculateRoomM2(List<RoomDTO> roomList) {
+        List<RoomDTO> returnedRooms = roomList.stream().map((r) -> {
+            r.setRoomM2(r.getRoomLength() * r.getRoomWidth());
+            return r;
+        }).collect(Collectors.toList());
+        return returnedRooms;
     }
 
-    public Double calculateTotalValue(PropertyDTO propertyDTO) {
-        throw new UnsupportedOperationException("Falta implementar.");
-    }
 
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
-        throw new UnsupportedOperationException("Falta implementar.");
+        propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictId())) ;
+        propertyDTO.setRooms(calculateRoomM2(propertyDTO.getRooms()));
+        PropertyDTO registeredProp = propertyRepository.add(propertyDTO);
+        return registeredProp;
     }
 
     public Double getTotalM2ByPropertyId(Long id) {
@@ -46,7 +53,7 @@ public class PropertyService {
         throw new UnsupportedOperationException("Falta implementar.");
     }
 
-    public Double getValueByPropertyId(Long id) {
+    public Double getTotalValueByPropertyId(Long id) {
         throw new UnsupportedOperationException("Falta implementar.");
     }
 }
