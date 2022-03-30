@@ -24,7 +24,7 @@ public class DistrictService {
         DistrictDTO checkDistrict = repository.findByName(district.getDistrictName());
 
         if (checkDistrict.getValueDistrictM2() != null) {
-            throw new DistrictAlreadyCreatedException("District already exists");
+            throw new DistrictAlreadyCreatedException("O bairro já consta na base de dados");
         }
         return repository.create(district);
 
