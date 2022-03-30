@@ -8,6 +8,7 @@ import br.com.group9.desafio_quality.repository.PropertyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +41,15 @@ public class PropertyService {
         return totalM2;
     }
 
+    private RoomDTO getBiggestRoom(PropertyDTO property) {
+        RoomDTO biggestRoom = new RoomDTO();
+        biggestRoom.setRoomM2(Double.MIN_VALUE);
+        for (RoomDTO room : property.getRooms()) {
+            if(room.getRoomM2() > biggestRoom.getRoomM2())
+                biggestRoom = room;
+        }
+        return biggestRoom;
+    }
 
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
         propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictId())) ;
@@ -54,14 +64,20 @@ public class PropertyService {
     }
 
     public List<RoomDTO> getM2PerRoomByPropertyId(Long id) {
-        throw new UnsupportedOperationException("Falta implementar.");
+        PropertyDTO foundProperty = propertyRepository.get(id);
+        return foundProperty.getRooms();
     }
 
-    public RoomDTO getBiggerRoomByPropertyId(Long id) {
-        throw new UnsupportedOperationException("Falta implementar.");
+    public RoomDTO getBiggestRoomByPropertyId(Long id) {
+        PropertyDTO foundProperty = propertyRepository.get(id);
+        return getBiggestRoom(foundProperty);
     }
 
     public Double getTotalValueByPropertyId(Long id) {
-        throw new UnsupportedOperationException("Falta implementar.");
+        PropertyDTO foundProperty = propertyRepository.get(id);
+        Double totalM2 = calculateTotalM2(foundProperty);
+        Double M2Value = 10.0; // foundProperty.getDistrict().getValueDistrictM2();
+        // TODO: 30/03/22 Implementar com o valor real do DistrictDTO
+        return totalM2 * M2Value;
     }
 }
