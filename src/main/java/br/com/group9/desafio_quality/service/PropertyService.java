@@ -3,10 +3,12 @@ package br.com.group9.desafio_quality.service;
 import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.dto.PropertyDTO;
 import br.com.group9.desafio_quality.dto.RoomDTO;
+import br.com.group9.desafio_quality.exception.DistrictNotFoundException;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
 import br.com.group9.desafio_quality.repository.PropertyRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.stream.Collectors;
@@ -21,9 +23,11 @@ public class PropertyService {
         this.districtRepository = districtRepository;
     }
 
-    private DistrictDTO findDistrict(Long districtId) {
-        return null;
-        // TODO: 30/03/22 Implementar lógica com DistrictRepository e exceptionHandler
+    private DistrictDTO findDistrict(String districtName) {
+        DistrictDTO foundDistrict = districtRepository.findByName(districtName);
+        if(foundDistrict == null)
+            throw new DistrictNotFoundException("Não há bairro cadastrado com o nome ".concat(districtName).concat("."));
+        return foundDistrict;
     }
 
     private List<RoomDTO> calculateRoomM2(List<RoomDTO> roomList) {
@@ -52,7 +56,7 @@ public class PropertyService {
     }
 
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
-        propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictId())) ;
+        propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictName()));
         propertyDTO.setRooms(calculateRoomM2(propertyDTO.getRooms()));
         PropertyDTO registeredProp = propertyRepository.add(propertyDTO);
         return registeredProp;

@@ -26,8 +26,8 @@ public class PropertyDTO {
     @NotEmpty(message = "Favor informar o nome da propriedade.")
     private String propName;
 
-    @NotNull(message = "Por favor informar o id do bairro.")
-    private Long districtId;
+    @NotEmpty(message = "Por favor informar o nome do bairro.")
+    private String districtName;
 
 
     private DistrictDTO district;
