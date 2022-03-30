@@ -6,114 +6,169 @@
 	},
 	"item": [
 		{
-			"name": "Create New Property Example",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"propName\": \"Casa no centro\",\n    \"districtId\": 2,\n    \"rooms\": [\n        {\n            \"roomName\": \"Cozinha\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 10.0\n        },\n        {\n            \"roomName\": \"Sala\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 5.0\n        }\n    ]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "District",
+			"item": [
+				{
+					"name": "Create District",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"districtName\": \"Centro\",\n    \"valueDistrictM2\": 10.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/district",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"district"
+							]
 						}
-					}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Property",
+			"item": [
+				{
+					"name": "Create Property",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"propName\": \"Casa no centro\",\n    \"districtName\": \"Centro\",\n    \"rooms\": [\n        {\n            \"roomName\": \"Cozinha\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 10.0\n        },\n        {\n            \"roomName\": \"Sala\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 5.0\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/property",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"property"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/property",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"property"
-					]
+				{
+					"name": "Get Total Square Meter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/property/{{id}}/totalM2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"property",
+								"{{id}}",
+								"totalM2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Biggest Room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/property/{{id}}/biggestRoom",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"property",
+								"{{id}}",
+								"biggestRoom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/property/{{id}}/rooms",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"property",
+								"{{id}}",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Total Value",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/property/{{id}}/totalValue",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"property",
+								"{{id}}",
+								"totalValue"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "Get Total M2",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/property/{{id}}/totalM2",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"property",
-						"{{id}}",
-						"totalM2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Biggest Room",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/property/{{id}}/biggestRoom",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"property",
-						"{{id}}",
-						"biggestRoom"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Rooms",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/property/{{id}}/rooms",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"property",
-						"{{id}}",
-						"rooms"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Total Value",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/property/{{id}}/totalValue",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"property",
-						"{{id}}",
-						"totalValue"
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
+		{
+			"key": "local",
+			"value": "localhost:8080"
+		},
 		{
 			"key": "id",
 			"value": "1"
