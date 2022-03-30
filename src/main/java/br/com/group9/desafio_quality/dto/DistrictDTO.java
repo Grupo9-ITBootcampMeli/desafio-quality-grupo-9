@@ -15,7 +15,7 @@ public class DistrictDTO {
     @NotNull(message = "O bairro não pode estar vazio.")
     @NotBlank(message = "O bairro não pode estar vazio.")
     @Size(max = 45, message = "O comprimento do bairro não pode exceder 45 caracteres ")
-    @Pattern(regexp = "^[A-Z][a-záàâãéèêíïóôõöúçñ]+[a-zA-Z]*$", message = "The district name should start with Uppercase letter")
+    @Pattern(regexp = "^[A-Z][a-záàâãéèêíïóôõöúçñ]+[a-zA-Z]*$", message = "O nome do bairro deve começar com letra maiúscula")
     private String districtName;
 
     @NotNull(message = "O valor do metro não pode estar vazio.")
