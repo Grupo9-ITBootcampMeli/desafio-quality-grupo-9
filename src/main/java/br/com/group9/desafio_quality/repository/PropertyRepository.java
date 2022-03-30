@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 
+// TODO: 30/03/22 Create JavaDoc comments
 @Repository
 public class PropertyRepository {
     private HashMap<Long, PropertyDTO> properties;
@@ -14,10 +15,15 @@ public class PropertyRepository {
     }
 
     public PropertyDTO add(PropertyDTO property) {
-        throw new UnsupportedOperationException("Falta implementar.");
+        property.setId(PropertyDTO.generateId());
+        properties.put(property.getId(), property);
+        return null;
     }
 
     public PropertyDTO get(Long id) {
-        throw new UnsupportedOperationException("Falta implementar.");
+        PropertyDTO foundProperty =  properties.get(id);
+        // TODO: 30/03/22 Create custom exception for not founding property by ID.
+        if(foundProperty == null) throw new RuntimeException();
+        return foundProperty;
     }
 }
