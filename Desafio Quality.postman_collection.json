@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "22ea385d-0eb1-4ffa-afb4-1a716a767b72",
+		"_postman_id": "4ecce18f-35cc-4474-8c42-d8340080ab6d",
 		"name": "Desafio Quality",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"propName\": \"\",\n    \"district\": {\n        \"propDistrict\": \"\",\n        \"valueDistrictM2\": 0.0\n    },\n    \"rooms\": [\n        {\n            \"roomName\": \"\",\n            \"roomWidth\": 0.0,\n            \"roomLength\": 0.0\n        }\n    ]\n}",
+					"raw": "{\n    \"propName\": \"Casa no centro\",\n    \"districtId\": 2,\n    \"rooms\": [\n        {\n            \"roomName\": \"Cozinha\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 10.0\n        },\n        {\n            \"roomName\": \"Sala\",\n            \"roomWidth\": 5.0,\n            \"roomLength\": 5.0\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,10 +20,43 @@
 					}
 				},
 				"url": {
-					"raw": ""
+					"raw": "localhost:8080/insert-property",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"insert-property"
+					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Total M2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/property/{{id}}/totalM2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{id}}",
+						"totalM2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
 		}
 	]
 }

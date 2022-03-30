@@ -32,6 +32,13 @@ public class PropertyService {
         }).collect(Collectors.toList());
         return returnedRooms;
     }
+    private Double calculateTotalM2(PropertyDTO property) {
+        Double totalM2 = 0.0;
+        for (RoomDTO Room : property.getRooms()) {
+            totalM2 += Room.getRoomM2();
+        }
+        return totalM2;
+    }
 
 
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
@@ -42,7 +49,8 @@ public class PropertyService {
     }
 
     public Double getTotalM2ByPropertyId(Long id) {
-        throw new UnsupportedOperationException("Falta implementar.");
+       PropertyDTO foundProperty = propertyRepository.get(id);
+       return calculateTotalM2(foundProperty);
     }
 
     public List<RoomDTO> getM2PerRoomByPropertyId(Long id) {

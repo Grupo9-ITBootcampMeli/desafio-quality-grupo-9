@@ -3,9 +3,7 @@ package br.com.group9.desafio_quality.controller;
 import br.com.group9.desafio_quality.dto.PropertyDTO;
 import br.com.group9.desafio_quality.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,5 +21,11 @@ public class PropertyController {
     public PropertyDTO insertProperty(@RequestBody @Valid PropertyDTO property) {
         PropertyDTO registered = propertyService.registerProperty(property);
         return registered;
+    }
+
+    @GetMapping("/property/{id}/totalM2")
+    public Double getPropertyM2(@PathVariable Long id) {
+       Double propertyM2 = propertyService.getTotalM2ByPropertyId(id);
+       return propertyM2;
     }
 }
