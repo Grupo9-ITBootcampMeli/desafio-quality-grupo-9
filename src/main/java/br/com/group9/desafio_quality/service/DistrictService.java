@@ -14,6 +14,12 @@ public class DistrictService {
         this.repository = repository;
     }
 
+    /**
+     * @param district recebe districtDTO que possui os campos districtName e valueDistrictM2.
+     * @return Realiza o cadastro do bairro passando os parâmetros contidos em district.
+     * @throws RuntimeException é lançado caso o retorno da função "findByName" seja null,
+     * indicando que o bairro já está cadastrado na base de dados.
+     */
     public DistrictDTO create(DistrictDTO district) throws RuntimeException {
         DistrictDTO checkDistrict = repository.findByName(district.getDistrictName());
 
