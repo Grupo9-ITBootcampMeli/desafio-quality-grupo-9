@@ -18,12 +18,6 @@ public class DistrictController {
 
     @PostMapping("/district")
     public ResponseEntity<DistrictDTO> create(@Valid @RequestBody DistrictDTO district) {
-        try {
             return new ResponseEntity<>(districtService.create(district), HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
     }
 }

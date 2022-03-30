@@ -1,6 +1,7 @@
 package br.com.group9.desafio_quality.service;
 
 import br.com.group9.desafio_quality.dto.DistrictDTO;
+import br.com.group9.desafio_quality.exception.DistrictAlreadyCreatedException;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class DistrictService {
         DistrictDTO checkDistrict = repository.findByName(district.getDistrictName());
 
         if (checkDistrict.getValueDistrictM2() != null) {
-            throw new RuntimeException("District already exists");
+            throw new DistrictAlreadyCreatedException("District already exists");
         }
         return repository.create(district);
 

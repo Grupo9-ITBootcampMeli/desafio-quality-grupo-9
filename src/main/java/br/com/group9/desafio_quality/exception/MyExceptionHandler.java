@@ -24,4 +24,10 @@ public class MyExceptionHandler {
         });
         return new ResponseEntity<>(results, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DistrictAlreadyCreatedException.class)
+    protected ResponseEntity<Object> handleDistrictAlreadyCreatedException(DistrictAlreadyCreatedException e) {
+        String bodyOfResponse = e.getMessage();
+        return ResponseEntity.badRequest().body(bodyOfResponse);
+    }
 }
