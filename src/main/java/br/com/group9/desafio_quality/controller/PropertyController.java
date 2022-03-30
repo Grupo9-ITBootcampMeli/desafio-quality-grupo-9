@@ -17,7 +17,7 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    @PostMapping("/insert-property")
+    @PostMapping("/property")
     public PropertyDTO insertProperty(@RequestBody @Valid PropertyDTO property) {
         PropertyDTO registered = propertyService.registerProperty(property);
         return registered;
