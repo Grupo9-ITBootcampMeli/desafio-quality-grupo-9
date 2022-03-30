@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4ecce18f-35cc-4474-8c42-d8340080ab6d",
+		"_postman_id": "c4e7b144-b878-4beb-80a6-6edc256daa3b",
 		"name": "Desafio Quality",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,13 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/insert-property",
+					"raw": "localhost:8080/property",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"insert-property"
+						"property"
 					]
 				}
 			},
@@ -47,6 +47,66 @@
 						"property",
 						"{{id}}",
 						"totalM2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Biggest Room",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/property/{{id}}/biggestRoom",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{id}}",
+						"biggestRoom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/property/{{id}}/rooms",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{id}}",
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Total Value",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/property/{{id}}/totalValue",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"property",
+						"{{id}}",
+						"totalValue"
 					]
 				}
 			},
