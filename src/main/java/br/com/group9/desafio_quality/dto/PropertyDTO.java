@@ -14,6 +14,8 @@ import java.util.List;
 public class PropertyDTO {
 
     private static Long counter = 1L;
+
+
     public static Long generateId(){
         return counter++;
     }
