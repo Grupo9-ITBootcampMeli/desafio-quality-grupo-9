@@ -59,14 +59,28 @@ public class PropertyServiceTests {
 
     }
 
-    // TODO
     @Test
     public void shouldThrowExceptionIfPropertyNotExists() {
-        Mockito.when(propertyRepository.get(ArgumentMatchers.anyLong())).thenThrow(RuntimeException.class);
+        Mockito.when(propertyRepository.get(ArgumentMatchers.anyLong())).thenReturn(null);
+        Long notRegisteredId = 1L;
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            propertyService.getTotalM2ByPropertyId(1L);
+        RuntimeException runtimeException1 = Assertions.assertThrows(RuntimeException.class, () -> {
+            propertyService.getTotalM2ByPropertyId(notRegisteredId);
         });
+        RuntimeException runtimeException2 = Assertions.assertThrows(RuntimeException.class, () -> {
+            propertyService.getM2PerRoomByPropertyId(notRegisteredId);
+        });
+        RuntimeException runtimeException3 = Assertions.assertThrows(RuntimeException.class, () -> {
+            propertyService.getBiggestRoomByPropertyId(notRegisteredId);
+        });
+        RuntimeException runtimeException4 = Assertions.assertThrows(RuntimeException.class, () -> {
+            propertyService.getTotalValueByPropertyId(notRegisteredId);
+        });
+        String expectedMessage = "Não há nenhuma propriedade com o ID ".concat(notRegisteredId.toString()).concat(".");
+        Assertions.assertEquals(expectedMessage, runtimeException1.getMessage());
+        Assertions.assertEquals(expectedMessage, runtimeException2.getMessage());
+        Assertions.assertEquals(expectedMessage, runtimeException3.getMessage());
+        Assertions.assertEquals(expectedMessage, runtimeException4.getMessage());
     }
 
     @Test
