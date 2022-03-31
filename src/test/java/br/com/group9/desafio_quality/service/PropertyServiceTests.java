@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PropertyServiceTests {
     /**
@@ -136,7 +137,7 @@ public class PropertyServiceTests {
     public void shouldReturnPropertyBiggestRoom() {
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
 
-        ArrayList<RoomDTO> listOfRooms = new ArrayList<RoomDTO>();
+        ArrayList<RoomDTO> listOfRooms = new ArrayList<>();
         listOfRooms.add(new RoomDTO("Sala1", 2.0, 2.0, 4.0));
         listOfRooms.add(new RoomDTO("Sala2", 3.0, 3.0, 9.0));
 
@@ -149,4 +150,25 @@ public class PropertyServiceTests {
             Assertions.assertEquals(listOfRooms.get(1).getRoomM2(),biggestRoomToCheck.getRoomM2());
         });
     }
+
+    @Test
+    public void shouldReturnM2PerRoomByPropertyId() {
+        //Setup
+        DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
+        ArrayList<RoomDTO> listOfRooms = new ArrayList<>();
+        listOfRooms.add(new RoomDTO("Sala1", 2.0, 2.0, 4.0));
+        listOfRooms.add(new RoomDTO("Sala2", 3.0, 3.0, 9.0));
+
+        PropertyDTO propertyDTO = new PropertyDTO(1L, "Propriedade de Teste", "Bairro teste", districtDTO, listOfRooms);
+        Mockito.when(propertyRepository.get(propertyDTO.getId())).thenReturn(propertyDTO);
+
+        //Ação
+        Assertions.assertDoesNotThrow(()-> {
+            List<RoomDTO> m2PerRoom = propertyService.getM2PerRoomByPropertyId(propertyDTO.getId());
+            Assertions.assertEquals(listOfRooms.get(0).getRoomM2(), m2PerRoom.get(0).getRoomM2());
+            Assertions.assertEquals(listOfRooms.get(1).getRoomM2(), m2PerRoom.get(1).getRoomM2());
+        });
+
+    }
+
 }
