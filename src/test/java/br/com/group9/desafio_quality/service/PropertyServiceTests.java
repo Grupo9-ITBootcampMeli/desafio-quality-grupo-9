@@ -171,4 +171,24 @@ public class PropertyServiceTests {
 
     }
 
+    @Test
+    public void shouldReturnTotalValuePerPropertyId() {
+        //Setup
+        DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
+        ArrayList<RoomDTO> listOfRooms = new ArrayList<>();
+        listOfRooms.add(new RoomDTO("Sala1", 2.0, 2.0, 4.0));
+        listOfRooms.add(new RoomDTO("Sala2", 3.0, 3.0, 9.0));
+        BigDecimal valueToBeChecked = BigDecimal.valueOf(130.00);
+
+        PropertyDTO propertyDTO = new PropertyDTO(1L, "Propriedade de Teste", "Bairro teste", districtDTO, listOfRooms);
+        Mockito.when(propertyRepository.get(propertyDTO.getId())).thenReturn(propertyDTO);
+
+//      Ação
+        Assertions.assertDoesNotThrow(() -> {
+            BigDecimal m2Value = propertyService.getTotalValueByPropertyId(1L);
+            System.out.println(valueToBeChecked);
+            Assertions.assertTrue(valueToBeChecked.compareTo(m2Value) == 0);
+        });
+    }
+
 }
