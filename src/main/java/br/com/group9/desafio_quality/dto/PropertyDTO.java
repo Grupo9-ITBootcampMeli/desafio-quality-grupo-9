@@ -8,14 +8,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 
+/**Classe de DTO que define a entidade de propriedade, armazenada no PropertyRepository.
+ * @author Amanda Zara, André Veziane, Antônio Schappo, Guilherme Pereira, Joan Davi, Vinicius Clemente
+ * @version 1.00
+ * @since Release 01 da aplicação
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PropertyDTO {
 
     private static Long counter = 1L;
-
-
     public static Long generateId(){
         return counter++;
     }
