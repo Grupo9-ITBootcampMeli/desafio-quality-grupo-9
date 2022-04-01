@@ -17,22 +17,17 @@ import java.util.stream.Collectors;
 public class PropertyService {
     private PropertyRepository propertyRepository;
     private DistrictRepository districtRepository;
+    private DistrictService districtService;
 
-    public PropertyService(PropertyRepository propertyRepository, DistrictRepository districtRepository) {
+    public PropertyService(PropertyRepository propertyRepository, DistrictService districtService) {
         this.propertyRepository = propertyRepository;
-        this.districtRepository = districtRepository;
+        this.districtService = districtService;
     }
 
-    private DistrictDTO findDistrict(String districtName) throws RuntimeException {
-        DistrictDTO foundDistrict = districtRepository.findByName(districtName);
-        if(foundDistrict == null)
-            throw new DistrictNotFoundException("Não há bairro cadastrado com o nome ".concat(districtName).concat("."));
-        return foundDistrict;
-    }
 
     private PropertyDTO findProperty(Long id) throws RuntimeException {
         PropertyDTO foundProperty = propertyRepository.get(id);
-        if(foundProperty == null)
+        if (foundProperty == null)
             throw new PropertyNotFoundException("Não há nenhuma propriedade com o ID ".concat(id.toString()).concat("."));
         return foundProperty;
     }
@@ -57,22 +52,21 @@ public class PropertyService {
         RoomDTO biggestRoom = new RoomDTO();
         biggestRoom.setRoomM2(Double.MIN_VALUE);
         for (RoomDTO room : property.getRooms()) {
-            if(room.getRoomM2() > biggestRoom.getRoomM2())
+            if (room.getRoomM2() > biggestRoom.getRoomM2())
                 biggestRoom = room;
         }
         return biggestRoom;
     }
 
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
-        propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictName()));
+        propertyDTO.setDistrict(districtService.findByName(propertyDTO.getDistrictName()));
         propertyDTO.setRooms(calculateRoomM2(propertyDTO.getRooms()));
-        PropertyDTO registeredProp = propertyRepository.add(propertyDTO);
-        return registeredProp;
+        return propertyRepository.add(propertyDTO);
     }
 
     public Double getTotalM2ByPropertyId(Long id) {
-       PropertyDTO foundProperty = findProperty(id);
-       return calculateTotalM2(foundProperty);
+        PropertyDTO foundProperty = findProperty(id);
+        return calculateTotalM2(foundProperty);
     }
 
     public List<RoomDTO> getM2PerRoomByPropertyId(Long id) {

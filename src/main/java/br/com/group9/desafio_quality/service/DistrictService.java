@@ -2,6 +2,7 @@ package br.com.group9.desafio_quality.service;
 
 import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.exception.DistrictAlreadyCreatedException;
+import br.com.group9.desafio_quality.exception.DistrictNotFoundException;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,21 @@ public class DistrictService {
      * @param district recebe districtDTO que possui os campos districtName e valueDistrictM2.
      * @return Realiza o cadastro do bairro passando os parâmetros contidos em district.
      * @throws RuntimeException é lançado caso o retorno da função "findByName" seja null,
-     * indicando que o bairro já está cadastrado na base de dados.
+     *                          indicando que o bairro já está cadastrado na base de dados.
      */
     public DistrictDTO create(DistrictDTO district) throws RuntimeException {
-        DistrictDTO checkDistrict = repository.findByName(district.getDistrictName());
-
-        if (checkDistrict.getValueDistrictM2() != null) {
+        DistrictDTO getDistrict = repository.findByName(district.getDistrictName());
+        if (getDistrict.getValueDistrictM2() != null) {
             throw new DistrictAlreadyCreatedException("O bairro já consta na base de dados");
         }
         return repository.create(district);
-
     }
 
+    public DistrictDTO findByName(String districtName) throws RuntimeException {
+        DistrictDTO checkDistrict = repository.findByName(districtName);
+        if (checkDistrict.getValueDistrictM2() == null) {
+            throw new DistrictNotFoundException("O bairro não consta na base de dados");
+        }
+        return checkDistrict;
+    }
 }

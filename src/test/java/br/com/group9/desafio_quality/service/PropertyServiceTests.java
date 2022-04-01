@@ -3,7 +3,6 @@ package br.com.group9.desafio_quality.service;
 import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.dto.PropertyDTO;
 import br.com.group9.desafio_quality.dto.RoomDTO;
-import br.com.group9.desafio_quality.repository.DistrictRepository;
 import br.com.group9.desafio_quality.repository.PropertyRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,13 +29,13 @@ public class PropertyServiceTests {
      */
     private PropertyService propertyService;
     private PropertyRepository propertyRepository;
-    private DistrictRepository districtRepository;
+    private DistrictService districtService;
 
     @BeforeEach
     public void setupService() {
         propertyRepository = Mockito.mock(PropertyRepository.class);
-        districtRepository = Mockito.mock(DistrictRepository.class);
-        propertyService = new PropertyService(propertyRepository, districtRepository);
+        districtService = Mockito.mock(DistrictService.class);
+        propertyService = new PropertyService(propertyRepository, districtService);
     }
 
 
@@ -93,7 +92,7 @@ public class PropertyServiceTests {
     public void shouldCheckIfDistrictIsValidOnProperty() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
-        Mockito.when(districtRepository.findByName("Eldorado")).thenReturn(districtDTO);
+        Mockito.when(districtService.findByName("Eldorado")).thenReturn(districtDTO);
 
         PropertyDTO propertyDTO = new PropertyDTO();
         propertyDTO.setDistrictName(districtDTO.getDistrictName());
@@ -104,27 +103,9 @@ public class PropertyServiceTests {
         //Ação
         Assertions.assertDoesNotThrow(() -> {
             PropertyDTO propertyDistrictToBeChecked = propertyService.registerProperty(propertyDTO);
+            Mockito.verify(districtService).findByName(propertyDTO.getDistrictName());
             Assertions.assertEquals(districtDTO.getDistrictName(), propertyDistrictToBeChecked.getDistrict().getDistrictName());
         });
-    }
-
-    @Test
-    @DisplayName("Teste do método registerProperty com bairro inválido, esperado exception ")
-    public void shouldThrowExceptionWhenRegisterPropertyIfInvalidDistrict() {
-        //Setup
-        PropertyDTO propertyDTO = new PropertyDTO();
-        propertyDTO.setDistrictName("Bairro de teste");
-        propertyDTO.setPropName("Propriedade teste");
-        propertyDTO.setRooms(Arrays.asList(new RoomDTO("Sala", 3.0, 2.0, 6.0)));
-
-        Mockito.when(propertyRepository.add(propertyDTO)).thenReturn(propertyDTO);
-        Mockito.when(districtRepository.findByName(ArgumentMatchers.anyString())).thenReturn(null);
-
-        //Ação
-        RuntimeException throwResult = Assertions.assertThrows(RuntimeException.class, () -> {
-            propertyService.registerProperty(propertyDTO);
-        });
-        Assertions.assertEquals("Não há bairro cadastrado com o nome ".concat(propertyDTO.getDistrictName()).concat("."), throwResult.getMessage());
     }
 
     @Test
@@ -132,7 +113,7 @@ public class PropertyServiceTests {
     public void shouldCalculateRoomsM2OfProperty() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
-        Mockito.when(districtRepository.findByName("Eldorado")).thenReturn(districtDTO);
+        Mockito.when(districtService.findByName("Eldorado")).thenReturn(districtDTO);
 
         Double roomAreaToBeChecked = 6.0;
 
