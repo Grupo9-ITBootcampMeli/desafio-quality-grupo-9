@@ -22,8 +22,6 @@ public class PropertyRepository {
     }
 
     public PropertyDTO get(Long id) {
-        PropertyDTO foundProperty =  properties.get(id);
-        if(foundProperty == null) throw new PropertyNotFoundException("Não há nenhuma propriedade com o ID ".concat(id.toString()).concat("."));
-        return foundProperty;
+        return properties.get(id);
     }
 }
