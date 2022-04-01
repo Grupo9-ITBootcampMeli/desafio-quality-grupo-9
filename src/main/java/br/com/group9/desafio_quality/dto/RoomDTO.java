@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
+/**Classe de DTO que define a entidade de quarto, utilizada como dependência da entidade PropertyDTO (propriedade).
+ * @author Amanda Zara, André Veziane, Antônio Schappo, Guilherme Pereira, Joan Davi, Vinicius Clemente
+ * @version 1.00
+ * @since Release 01 da aplicação
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

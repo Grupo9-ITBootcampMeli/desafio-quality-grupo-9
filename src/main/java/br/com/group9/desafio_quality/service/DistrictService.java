@@ -5,6 +5,12 @@ import br.com.group9.desafio_quality.exception.DistrictAlreadyCreatedException;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
 import org.springframework.stereotype.Service;
 
+/**Classe para o Service da Aplicação Springboot que lida com as requisições para os recursos associados a entidade
+ * de bairro, onde serão contidos, valores e métodos para o mesmo.
+ * @author Amanda Zara, André Veziane, Antônio Schappo, Guilherme Pereira, Joan Davi, Vinicius Clemente
+ * @version 1.00
+ * @since Release 01 da aplicação
+ */
 @Service
 public class DistrictService {
 

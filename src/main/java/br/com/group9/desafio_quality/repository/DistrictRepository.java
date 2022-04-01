@@ -8,6 +8,12 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**Classe que implementa a abstração na forma de Repositório de compras responsável por gerenciar as leituras e
+ * inserções de DistrictDTO (bairros).
+ * @author Amanda Zara, André Veziane, Antônio Schappo, Guilherme Pereira, Joan Davi, Vinicius Clemente
+ * @version 1.00
+ * @since Release 01 da aplicação
+ */
 @Repository
 public class DistrictRepository implements IDistrictRepository<DistrictDTO> {
     Map<String, BigDecimal> districtMap = new HashMap<String, BigDecimal>();
