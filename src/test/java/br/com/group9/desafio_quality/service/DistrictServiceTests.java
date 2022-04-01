@@ -4,12 +4,13 @@ import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
-
+@DisplayName("Testes do District Service")
 public class DistrictServiceTests {
 
     /**
@@ -31,6 +32,7 @@ public class DistrictServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método create passando bairro, esperado sucesso")
     public void shouldCreateNewDistrictDTOWhenValidParam() {
         // Pré-condição / Setup
         DistrictDTO testDTO = new DistrictDTO("Test", BigDecimal.valueOf(10.0));
@@ -50,6 +52,7 @@ public class DistrictServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método create passando um bairro existente, esperado exception")
     public void shouldNotCreateWhenDistrictNameAlreadyExists() {
         // Pré-condição / Setup
         DistrictDTO testDTO = new DistrictDTO("Test", BigDecimal.valueOf(10.0));
@@ -66,6 +69,7 @@ public class DistrictServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método create passando null, esperado exception")
     public void shouldNotCreateWhenNullParam() {
         // Pré-condição / Setup
         DistrictDTO testDTO = null;

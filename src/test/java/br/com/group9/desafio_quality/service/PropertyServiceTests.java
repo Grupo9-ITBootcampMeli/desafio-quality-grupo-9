@@ -8,9 +8,10 @@ import br.com.group9.desafio_quality.repository.PropertyRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
+
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@DisplayName("Testes do Property Service")
 public class PropertyServiceTests {
     /**
      * Métodos do PropertyService:
@@ -37,7 +39,9 @@ public class PropertyServiceTests {
         propertyService = new PropertyService(propertyRepository, districtRepository);
     }
 
+
     @Test
+    @DisplayName("Teste do método getTotalM2ByPropertyId, esperado sucesso")
     public void shouldCalculatePropertyArea() {
         //Setup
         final Double areaToBeChecked = 13.0;
@@ -60,6 +64,7 @@ public class PropertyServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método getTotalM2ByPropertyId, esperado exception")
     public void shouldThrowExceptionIfPropertyNotExists() {
         Mockito.when(propertyRepository.get(ArgumentMatchers.anyLong())).thenReturn(null);
         Long notRegisteredId = 1L;
@@ -84,6 +89,7 @@ public class PropertyServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método registerProperty se bairro é válido, esperado sucesso ")
     public void shouldCheckIfDistrictIsValidOnProperty() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
@@ -103,7 +109,7 @@ public class PropertyServiceTests {
     }
 
     @Test
-
+    @DisplayName("Teste do método registerProperty com bairro inválido, esperado exception ")
     public void shouldThrowExceptionWhenRegisterPropertyIfInvalidDistrict() {
         //Setup
         PropertyDTO propertyDTO = new PropertyDTO();
@@ -122,6 +128,7 @@ public class PropertyServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método registerProperty se os tamanhos dos quartos estão sendo calculados, esperado sucesso ")
     public void shouldCalculateRoomsM2OfProperty() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
@@ -148,6 +155,7 @@ public class PropertyServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método getBiggestRoomByPropertyId se retorna o maior quarto em m², esperado sucesso ")
     public void shouldReturnPropertyBiggestRoom() {
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
 
@@ -159,13 +167,14 @@ public class PropertyServiceTests {
         Mockito.when(propertyRepository.get(propertyDTO.getId())).thenReturn(propertyDTO);
 
         //Ação
-        Assertions.assertDoesNotThrow(()->{
+        Assertions.assertDoesNotThrow(() -> {
             RoomDTO biggestRoomToCheck = propertyService.getBiggestRoomByPropertyId(propertyDTO.getId());
-            Assertions.assertEquals(listOfRooms.get(1).getRoomM2(),biggestRoomToCheck.getRoomM2());
+            Assertions.assertEquals(listOfRooms.get(1).getRoomM2(), biggestRoomToCheck.getRoomM2());
         });
     }
 
     @Test
+    @DisplayName("Teste do método getM2PerRoomByPropertyId se retorna o tamanho dos quartos em m², esperado sucesso ")
     public void shouldReturnM2PerRoomByPropertyId() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
@@ -177,7 +186,7 @@ public class PropertyServiceTests {
         Mockito.when(propertyRepository.get(propertyDTO.getId())).thenReturn(propertyDTO);
 
         //Ação
-        Assertions.assertDoesNotThrow(()-> {
+        Assertions.assertDoesNotThrow(() -> {
             List<RoomDTO> m2PerRoom = propertyService.getM2PerRoomByPropertyId(propertyDTO.getId());
             Assertions.assertEquals(listOfRooms.get(0).getRoomM2(), m2PerRoom.get(0).getRoomM2());
             Assertions.assertEquals(listOfRooms.get(1).getRoomM2(), m2PerRoom.get(1).getRoomM2());
@@ -186,6 +195,7 @@ public class PropertyServiceTests {
     }
 
     @Test
+    @DisplayName("Teste do método getTotalValueByPropertyId se retorna o tamanho total da propriedade m², esperado sucesso ")
     public void shouldReturnTotalValuePerPropertyId() {
         //Setup
         DistrictDTO districtDTO = new DistrictDTO("Eldorado", BigDecimal.valueOf(10.0));
@@ -200,8 +210,7 @@ public class PropertyServiceTests {
 //      Ação
         Assertions.assertDoesNotThrow(() -> {
             BigDecimal m2Value = propertyService.getTotalValueByPropertyId(1L);
-            System.out.println(valueToBeChecked);
-            Assertions.assertTrue(valueToBeChecked.compareTo(m2Value) == 0);
+            Assertions.assertEquals(valueToBeChecked.compareTo(m2Value), 0);
         });
     }
 
