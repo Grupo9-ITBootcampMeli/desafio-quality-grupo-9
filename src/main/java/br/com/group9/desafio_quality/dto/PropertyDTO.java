@@ -26,8 +26,8 @@ public class PropertyDTO {
 
     private Long id;
 
-    @Pattern(regexp="([A-Z]|[0-9])[\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú]*$", message = "Nome deve estar em letra maiúscula.")
-    @Size(max = 30, message = "Favor escolher um nome menor que 30 caracteres.")
+    @Pattern(regexp="([A-Z]|[0-9])[\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú]*$", message = "Nome da propriedade deve começar em letra maiúscula.")
+    @Size(max = 30, message = "Favor escolher um nome de propriedade menor que 30 caracteres.")
     @NotEmpty(message = "Favor informar o nome da propriedade.")
     private String propName;
 
