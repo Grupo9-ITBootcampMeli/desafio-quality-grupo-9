@@ -24,7 +24,7 @@ public class DistrictDTO {
     private String districtName;
 
     @NotNull(message = "O valor do metro não pode estar vazio.")
-    @DecimalMin(value = "0.0", inclusive = false)
-    @DecimalMax(value = "13")
+    @DecimalMin(message = "O valor do m² deve ser maior que 0",value = "0.0", inclusive = false)
+    @DecimalMax(message = "O valor do m² deve ser menor ou igual a 13",value = "13")
     private BigDecimal valueDistrictM2;
 }

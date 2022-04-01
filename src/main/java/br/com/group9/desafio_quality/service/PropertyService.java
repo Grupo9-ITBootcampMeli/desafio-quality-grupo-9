@@ -23,25 +23,13 @@ import java.util.stream.Collectors;
 public class PropertyService {
     private PropertyRepository propertyRepository;
     private DistrictRepository districtRepository;
+    private DistrictService districtService;
 
-    public PropertyService(PropertyRepository propertyRepository, DistrictRepository districtRepository) {
+    public PropertyService(PropertyRepository propertyRepository, DistrictService districtService) {
         this.propertyRepository = propertyRepository;
-        this.districtRepository = districtRepository;
+        this.districtService = districtService;
     }
 
-    /**
-     * Método para busca de DistrictDTO a partir do nome
-     * @param districtName recebe o nome do DistrictDTO a ser pesquisado
-     * @return retorna o DistrictDTO encontrado
-     * @throws RuntimeException é lançado caso não seja encontrado DistrictDTO
-     * com o nome informado
-     */
-    private DistrictDTO findDistrict(String districtName) throws RuntimeException {
-        DistrictDTO foundDistrict = districtRepository.findByName(districtName);
-        if(foundDistrict == null)
-            throw new DistrictNotFoundException("Não há bairro cadastrado com o nome ".concat(districtName).concat("."));
-        return foundDistrict;
-    }
 
     /**
      * Método para busca de PropertyDTO a partir do ID
@@ -52,7 +40,7 @@ public class PropertyService {
      */
     private PropertyDTO findProperty(Long id) throws RuntimeException {
         PropertyDTO foundProperty = propertyRepository.get(id);
-        if(foundProperty == null)
+        if (foundProperty == null)
             throw new PropertyNotFoundException("Não há nenhuma propriedade com o ID ".concat(id.toString()).concat("."));
         return foundProperty;
     }
@@ -92,7 +80,7 @@ public class PropertyService {
         RoomDTO biggestRoom = new RoomDTO();
         biggestRoom.setRoomM2(Double.MIN_VALUE);
         for (RoomDTO room : property.getRooms()) {
-            if(room.getRoomM2() > biggestRoom.getRoomM2())
+            if (room.getRoomM2() > biggestRoom.getRoomM2())
                 biggestRoom = room;
         }
         return biggestRoom;
@@ -104,10 +92,9 @@ public class PropertyService {
      * @return retorna o PropertyDTO completo registrado
      */
     public PropertyDTO registerProperty(PropertyDTO propertyDTO) {
-        propertyDTO.setDistrict(findDistrict(propertyDTO.getDistrictName()));
+        propertyDTO.setDistrict(districtService.findByName(propertyDTO.getDistrictName()));
         propertyDTO.setRooms(calculateRoomM2(propertyDTO.getRooms()));
-        PropertyDTO registeredProp = propertyRepository.add(propertyDTO);
-        return registeredProp;
+        return propertyRepository.add(propertyDTO);
     }
 
     /**
@@ -116,8 +103,8 @@ public class PropertyService {
      * @return retorna em Double o total de m² da propriedade
      */
     public Double getTotalM2ByPropertyId(Long id) {
-       PropertyDTO foundProperty = findProperty(id);
-       return calculateTotalM2(foundProperty);
+        PropertyDTO foundProperty = findProperty(id);
+        return calculateTotalM2(foundProperty);
     }
 
     /**

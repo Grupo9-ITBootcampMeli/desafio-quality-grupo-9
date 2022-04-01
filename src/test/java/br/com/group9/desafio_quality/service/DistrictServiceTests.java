@@ -2,6 +2,7 @@ package br.com.group9.desafio_quality.service;
 
 import br.com.group9.desafio_quality.dto.DistrictDTO;
 import br.com.group9.desafio_quality.repository.DistrictRepository;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,16 +11,17 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+
 @DisplayName("Testes do District Service")
 public class DistrictServiceTests {
 
     /**
      * Métodos do DistrictService:
      * - public DistrictDTO create(DistrictDTO district) throws RuntimeException
-     *      Cenários:
-     *          - Criar com sucesso quando é informado um DistrictDTO válido;
-     *          - Não criar quando já existe um DistrictDTO com o mesmo getDistrictName();
-     *          - Não criar quando é informado null no parâmetro.
+     * Cenários:
+     * - Criar com sucesso quando é informado um DistrictDTO válido;
+     * - Não criar quando já existe um DistrictDTO com o mesmo getDistrictName();
+     * - Não criar quando é informado null no parâmetro.
      */
 
     private DistrictService districtService;
@@ -78,5 +80,29 @@ public class DistrictServiceTests {
         RuntimeException givenException = Assertions.assertThrows(NullPointerException.class, () -> {
             DistrictDTO result = districtService.create(testDTO);
         });
+    }
+
+    @Test
+    @DisplayName("Teste do método findName com bairro válido, esperado sucesso")
+    public void shouldFindDistrict() {
+        // Setup
+        DistrictDTO testDistric = new DistrictDTO("Centro", BigDecimal.valueOf(11.0));
+        Mockito.when(districtRepository.findByName(testDistric.getDistrictName())).thenReturn(testDistric);
+
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(testDistric, districtService.findByName(testDistric.getDistrictName()));
+        });
+    }
+
+    @Test
+    @DisplayName("Teste do método findName com bairro inválido, esperado exception")
+    public void shouldNotFindDistrictAndThrowException() {
+        DistrictDTO testDistrict = new DistrictDTO("Centro", BigDecimal.valueOf(11.0));
+        Mockito.when(districtRepository.findByName(testDistrict.getDistrictName())).thenReturn(new DistrictDTO("Centro", null));
+
+        RuntimeException returnException = Assertions.assertThrows(RuntimeException.class, () -> {
+            districtService.findByName(testDistrict.getDistrictName());
+        });
+        Assertions.assertEquals("O bairro não consta na base de dados",returnException.getMessage());
     }
 }
